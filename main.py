@@ -1,6 +1,7 @@
 import urllib.request
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
+import sys
 
 base_url = 'http://www.nogizaka46.com/member/'
 
@@ -32,10 +33,14 @@ def namelist_with_birthday():
             soup2 = BeautifulSoup(next_html, "html.parser")
             birthday = soup2.find_all("dd")[0].string
             print(kanji + " " + kana + " " + birthday)
+            #print('{ name: "' + kana + '", birthday: "' + birthday + '" },')
 
 def main():
-    #namelist()
-    namelist_with_birthday()
+    arguments = sys.argv
+    if len(arguments) > 1 and '-b' in arguments[1]:
+        namelist_with_birthday()
+    else:
+        namelist()
 
 if __name__ == '__main__':
     main()
